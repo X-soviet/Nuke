@@ -24,7 +24,7 @@ from discord import Status,Activity, ActivityType
 @bot.event
 async def on_ready():
     await bot.change_presence(
-        status=Status.online,  
+        status=Status.dnd,  
         activity=Activity(type=ActivityType.playing, name="antispam")
     )
     print(f"ログイン成功: {bot.user}")
