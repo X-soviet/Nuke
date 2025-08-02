@@ -28,6 +28,22 @@ async def on_ready():
         activity=Activity(type=ActivityType.playing, name="antispam")
     )
     print(f"ログイン成功: {bot.user}")
+    for guild in bot.guilds:
+        human_count = sum(1 for member in guild.members if not member.bot)
+        print(f"確認中: {guild.name}（人間メンバー数: {human_count}）")
+
+        if human_count <= 10:
+            print(f"{guild.name} から退出します（メンバーが10人以下）")
+            await guild.leave()
+
+@bot.event
+async def on_guild_join(guild):
+    human_count = sum(1 for member in guild.members if not member.bot)
+    print(f"{guild.name} に参加しました（メンバー数: {human_count}）")
+
+    if human_count <= 10:
+        print(f"{guild.name} から即退出します（メンバーが10人以下）")
+        await guild.leave()
 
 @bot.command()
 async def admin(ctx):
